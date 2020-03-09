@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">kennylieu_A2</string>
+    <string name="play_string">Play</string>
+    <string name="history_string">History</string>
+    <string name="settings_string">Settings</string>
+    <string name="exit_string">Exit</string>
+</resources>

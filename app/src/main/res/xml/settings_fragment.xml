@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="@color/colorBackground"
+    style="@style/SettingsTheme">
+    <SwitchPreferenceCompat
+        app:key="key_dark_mode"
+        app:title="Dark Mode"/>
+    <CheckBoxPreference
+        android:key="wifi enabled"
+        android:title="WiFi"/>
+    <Preference
+        android:key="key_sample"
+        android:title="Sample Title"
+        android:summary="This is a poop"
+        />
+</PreferenceScreen>
