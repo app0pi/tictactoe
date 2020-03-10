@@ -9,9 +9,9 @@
     <SwitchPreferenceCompat
         app:key="key_dark_mode"
         app:title="Dark Mode"/>
-    <SwitchPreferenceCompat
+    <!--SwitchPreferenceCompat
         app:key="key_two_player"
-        app:title="Two Player"/>
+        app:title="Two Player"/-->
     <SwitchPreferenceCompat
         app:key="key_x_first"
         app:title="X Goes First"/>
