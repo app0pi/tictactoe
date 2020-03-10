@@ -21,5 +21,6 @@
         android:id="@+id/new_result_menu_item"
         android:icon="@android:drawable/ic_menu_add"
         android:title="New Result"
+        android:visible="false"
         app:showAsAction="ifRoom|withText"/>
 </menu>

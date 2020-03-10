@@ -11,6 +11,7 @@ import androidx.core.app.ActivityCompat.recreate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
@@ -38,6 +39,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         val darkModeOn: SwitchPreferenceCompat? = findPreference("key_dark_mode")
         val xFirst: SwitchPreferenceCompat? = findPreference("key_x_first")
+        val clearDatabases: Preference? = findPreference("key_clear_database")
+
+        clearDatabases?.setOnPreferenceClickListener {
+            Log.d(logTag, "database cleared pressed")
+            Toast.makeText(activity,"Database cleared",Toast.LENGTH_SHORT).show()
+            settingsViewModel.deleteResults()
+            true
+        }
 
         xFirst?.setOnPreferenceChangeListener{ preference, newValue ->
             if(newValue == true){
