@@ -37,12 +37,19 @@ class GameFragment : Fragment() {
 
 
     private var currentPiece: Int = R.drawable.ic_o
+    private var player1Pieces: MutableList<ImageView> = mutableListOf<ImageView>()
 
+    
     private fun playPiece(block: ImageView){
-        if(currentPiece == R.drawable.ic_o)
-            currentPiece = R.drawable.ic_x
-        else
-            currentPiece = R.drawable.ic_o
+        if(!player1Pieces.contains(block)){
+            block.setImageResource(currentPiece)
+            if(currentPiece == R.drawable.ic_o)
+                currentPiece = R.drawable.ic_x
+            else
+                currentPiece = R.drawable.ic_o
+            player1Pieces.add(block)
+        }
+
     }
 
     override fun onCreateView(
@@ -83,28 +90,28 @@ class GameFragment : Fragment() {
             playPiece(block1)
         }
         block2.setOnClickListener {
-            playPiece(block1)
+            playPiece(block2)
         }
         block3.setOnClickListener {
-            playPiece(block1)
+            playPiece(block3)
         }
         block4.setOnClickListener {
-            playPiece(block1)
+            playPiece(block4)
         }
         block5.setOnClickListener {
-            playPiece(block1)
+            playPiece(block5)
         }
         block6.setOnClickListener {
-            playPiece(block1)
+            playPiece(block6)
         }
         block7.setOnClickListener {
-            playPiece(block1)
+            playPiece(block7)
         }
         block8.setOnClickListener {
-            playPiece(block1)
+            playPiece(block8)
         }
         block9.setOnClickListener {
-            playPiece(block1)
+            playPiece(block9)
         }
 
         return view
