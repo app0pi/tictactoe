@@ -24,9 +24,9 @@ class ResultRepository(private val resultDao: ResultDao) {
         }
     }
 
-    fun deleteResults() {
+    fun deleteResult(result: Result) {
         executor.execute {
-            resultDao.deleteResults()
+            resultDao.deleteResult(result)
         }
     }
 

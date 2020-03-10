@@ -19,5 +19,5 @@ interface ResultDao {
     fun addResult(result: Result)
 
     @Delete
-    fun deleteResults()
+    fun deleteResult(result: Result)
 }

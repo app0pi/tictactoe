@@ -42,7 +42,8 @@ dependencies {
     implementation "androidx.preference:preference:$preference_version"
     // Kotlin
     implementation "androidx.preference:preference-ktx:$preference_version"
-
+    
+    apply plugin: 'kotlin-kapt' //I added this
     //Room Stuff:
     def room_version = "2.2.4"
     implementation "androidx.room:room-runtime:$room_version"
@@ -55,4 +56,5 @@ dependencies {
     implementation "androidx.room:room-guava:$room_version"
     // Test helpers
     testImplementation "androidx.room:room-testing:$room_version"
+    kapt "androidx.room:room-compiler:$room_version" //I just added this
 }

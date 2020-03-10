@@ -15,7 +15,8 @@ import androidx.preference.SwitchPreferenceCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.csci448.kennylieu.kennylieu_A2.R
-import com.csci448.kennylieu.kennylieu_A2.data.*
+import com.csci448.kennylieu.kennylieu_A2.data.Result
+import com.csci448.kennylieu.kennylieu_A2.data.ResultDatabase
 
 class HistoryFragment : Fragment() {
     interface Callbacks {
@@ -131,6 +132,11 @@ class HistoryFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
+            /*R.id.new_result_menu_item -> {
+                val result = Result()
+                historyViewModel.addResult(result)
+                true
+            }*/
             R.id.game_menu_item -> {
                 Log.d(logTag, "game clicked")
                 callbacks?.onGameClicked()
