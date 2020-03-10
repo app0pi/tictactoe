@@ -6,6 +6,7 @@ import android.preference.PreferenceFragment
 import android.util.Log
 import android.view.*
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -27,6 +28,7 @@ class GameFragment : Fragment() {
 
     private lateinit var playAgainButton: Button
     private lateinit var goBackButton: Button
+    private lateinit var block1: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,10 +40,15 @@ class GameFragment : Fragment() {
         playAgainButton = view?.findViewById(R.id.play_again_button) as Button
         goBackButton = view?.findViewById(R.id.go_back_button) as Button
         playAgainButton.setOnClickListener {
-
+            //TODO set play again button action
         }
         goBackButton.setOnClickListener {
             callbacks?.onGameBackClicked()
+        }
+        block1 = view?.findViewById(R.id.block1) as ImageView
+        block1.setOnClickListener {
+            block1.setImageResource(R.drawable.ic_o)
+            //block1.setImageResource(android.R.color.transparent)
         }
         return view
 
