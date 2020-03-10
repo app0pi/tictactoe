@@ -14,6 +14,7 @@ import com.csci448.kennylieu.kennylieu_A2.R
 
 class HistoryFragment : Fragment() {
     interface Callbacks {
+        fun onGameClicked()
         fun onSettingsClicked()
         fun onHistoryBackClicked()
     }
@@ -95,6 +96,11 @@ class HistoryFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
+            R.id.game_menu_item -> {
+                Log.d(logTag, "game clicked")
+                callbacks?.onGameClicked()
+                true
+            }
             R.id.settings_menu_item -> {
                 Log.d(logTag, "settings clicked")
                 callbacks?.onSettingsClicked()
