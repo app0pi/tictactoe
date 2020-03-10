@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.csci448.kennylieu.kennylieu_A2.R
@@ -35,19 +36,63 @@ class GameFragment : Fragment() {
     private lateinit var block8: ImageView
     private lateinit var block9: ImageView
 
-
+    private var piecesPlaced: Int = 0
+    private var gameOver: Boolean = false
     private var currentPiece: Int = R.drawable.ic_o
+    private var playedPieces: MutableList<ImageView> = mutableListOf<ImageView>()
     private var player1Pieces: MutableList<ImageView> = mutableListOf<ImageView>()
+    private var player2Pieces: MutableList<ImageView> = mutableListOf<ImageView>()
+    private var player1: Boolean = true
 
 
     private fun playPiece(block: ImageView){
-        if(!player1Pieces.contains(block)){
+        if(!playedPieces.contains(block) && !gameOver){
             block.setImageResource(currentPiece)
             if(currentPiece == R.drawable.ic_o)
                 currentPiece = R.drawable.ic_x
             else
                 currentPiece = R.drawable.ic_o
-            player1Pieces.add(block)
+            playedPieces.add(block)
+            piecesPlaced++
+            if(player1){
+                player1Pieces.add(block)
+                player1 = false
+            } else {
+                player2Pieces.add(block)
+                player1 = true
+            }
+        }
+        if(player1Pieces.size>=3 &&
+            (player1Pieces.contains(block1) && player1Pieces.contains(block2) && player1Pieces.contains(block3) ||
+            player1Pieces.contains(block4) && player1Pieces.contains(block5) && player1Pieces.contains(block6) ||
+            player1Pieces.contains(block7) && player1Pieces.contains(block8) && player1Pieces.contains(block9) ||
+            player1Pieces.contains(block1) && player1Pieces.contains(block4) && player1Pieces.contains(block7) ||
+            player1Pieces.contains(block2) && player1Pieces.contains(block5) && player1Pieces.contains(block8) ||
+            player1Pieces.contains(block3) && player1Pieces.contains(block6) && player1Pieces.contains(block9) ||
+            player1Pieces.contains(block1) && player1Pieces.contains(block5) && player1Pieces.contains(block9) ||
+            player1Pieces.contains(block3) && player1Pieces.contains(block5) && player1Pieces.contains(block7) ) )
+        {
+            Toast.makeText(activity,"Player 1 Wins!", Toast.LENGTH_SHORT).show()
+            gameOver = true
+            return
+        }
+        if(player2Pieces.size>=3 &&
+            (player2Pieces.contains(block1) && player2Pieces.contains(block2) && player2Pieces.contains(block3) ||
+            player2Pieces.contains(block4) && player2Pieces.contains(block5) && player2Pieces.contains(block6) ||
+            player2Pieces.contains(block7) && player2Pieces.contains(block8) && player2Pieces.contains(block9) ||
+            player2Pieces.contains(block1) && player2Pieces.contains(block4) && player2Pieces.contains(block7) ||
+            player2Pieces.contains(block2) && player2Pieces.contains(block5) && player2Pieces.contains(block8) ||
+            player2Pieces.contains(block3) && player2Pieces.contains(block6) && player2Pieces.contains(block9) ||
+            player2Pieces.contains(block1) && player2Pieces.contains(block5) && player2Pieces.contains(block9) ||
+            player2Pieces.contains(block3) && player2Pieces.contains(block5) && player2Pieces.contains(block7) ) )
+        {
+            Toast.makeText(activity,"Player 2 Wins!", Toast.LENGTH_SHORT).show()
+            gameOver = true
+            return
+        }
+        if(piecesPlaced==9){
+            Toast.makeText(activity,"GAME OVER, Tie", Toast.LENGTH_SHORT).show()
+            gameOver = true
         }
 
     }
@@ -81,7 +126,13 @@ class GameFragment : Fragment() {
             block7.setImageResource(android.R.color.transparent)
             block8.setImageResource(android.R.color.transparent)
             block9.setImageResource(android.R.color.transparent)
+            playedPieces = mutableListOf<ImageView>()
             player1Pieces = mutableListOf<ImageView>()
+            player2Pieces = mutableListOf<ImageView>()
+            gameOver = false
+            piecesPlaced = 0
+            player1 = true
+            currentPiece = R.drawable.ic_o
         }
         goBackButton.setOnClickListener {
             callbacks?.onGameBackClicked()
