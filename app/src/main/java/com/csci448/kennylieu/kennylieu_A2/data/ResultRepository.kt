@@ -30,6 +30,12 @@ class ResultRepository(private val resultDao: ResultDao) {
         }
     }
 
+    fun deleteResults() {
+        executor.execute {
+            resultDao.deleteResults()
+        }
+    }
+
     companion object {
         private var instance: ResultRepository? = null
 

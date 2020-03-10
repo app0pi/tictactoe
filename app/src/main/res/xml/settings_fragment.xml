@@ -15,4 +15,7 @@
     <SwitchPreferenceCompat
         app:key="key_x_first"
         app:title="X Goes First"/>
+    <Preference
+        app:key="key_clear_database"
+        app:title="Clear Database"/>
 </PreferenceScreen>

@@ -9,12 +9,14 @@ import android.view.*
 import android.widget.Toast
 import androidx.core.app.ActivityCompat.recreate
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
 import com.csci448.kennylieu.kennylieu_A2.MainActivity
 import com.csci448.kennylieu.kennylieu_A2.R
+import com.csci448.kennylieu.kennylieu_A2.ui.game.GameViewModel
 
 class SettingsFragment : PreferenceFragmentCompat() {
     interface Callbacks {
@@ -25,7 +27,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private var callbacks: Callbacks? = null
 
-    private lateinit var viewModel: SettingsViewModel
+    //private lateinit var viewModel: SettingsViewModel
+    private lateinit var settingsViewModel: SettingsViewModel
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         Log.d(logTag, "onCreatePreferences() called")
@@ -62,15 +65,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
             true
         }
-
-
-
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(logTag, "onCreate() called")
+
+        val factory = SettingsViewModelFactory(requireContext())
+        settingsViewModel = ViewModelProvider(this, factory).get(SettingsViewModel::class.java)
     }
 
 

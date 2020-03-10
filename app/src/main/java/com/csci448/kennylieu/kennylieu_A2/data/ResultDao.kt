@@ -20,4 +20,7 @@ interface ResultDao {
 
     @Delete
     fun deleteResult(result: Result)
+
+    @Query("DELETE FROM result")
+    fun deleteResults()
 }
