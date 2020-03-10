@@ -39,7 +39,7 @@ class GameFragment : Fragment() {
     private var currentPiece: Int = R.drawable.ic_o
     private var player1Pieces: MutableList<ImageView> = mutableListOf<ImageView>()
 
-    
+
     private fun playPiece(block: ImageView){
         if(!player1Pieces.contains(block)){
             block.setImageResource(currentPiece)
@@ -81,6 +81,7 @@ class GameFragment : Fragment() {
             block7.setImageResource(android.R.color.transparent)
             block8.setImageResource(android.R.color.transparent)
             block9.setImageResource(android.R.color.transparent)
+            player1Pieces = mutableListOf<ImageView>()
         }
         goBackButton.setOnClickListener {
             callbacks?.onGameBackClicked()
