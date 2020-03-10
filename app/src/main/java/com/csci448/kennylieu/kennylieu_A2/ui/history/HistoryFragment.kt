@@ -7,10 +7,14 @@ import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.csci448.kennylieu.kennylieu_A2.R
+import com.csci448.kennylieu.kennylieu_A2.data.*
 
 class HistoryFragment : Fragment() {
     interface Callbacks {
@@ -18,6 +22,11 @@ class HistoryFragment : Fragment() {
         fun onSettingsClicked()
         fun onHistoryBackClicked()
     }
+    //TODO there are two viewmodels, fix that
+
+    private lateinit var historyViewModel: HistoryViewModel
+    private lateinit var resultRecyclerView: RecyclerView
+    private lateinit var adapter: HistoryAdapter
 
     private val logTag = "448.HistoryFragment"
 
@@ -25,13 +34,31 @@ class HistoryFragment : Fragment() {
 
     private lateinit var viewModel: HistoryViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d(logTag, "onCreate() called")
+        val factory = HistoryViewModelFactory(requireContext())
+        historyViewModel = ViewModelProvider(this, factory).get(HistoryViewModel::class.java)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         Log.d(logTag, "onCreateView() called")
         setHasOptionsMenu(true)
-        return inflater.inflate(R.layout.history_fragment, container, false)
+        val view = inflater.inflate(R.layout.history_fragment, container, false)
+        resultRecyclerView = view.findViewById(R.id.history_recycler_view)
+        resultRecyclerView.layoutManager = LinearLayoutManager(context)
+        updateUI(emptyList())
+        return view
+    }
+
+    private fun updateUI(results: List<Result>){
+        adapter = HistoryAdapter(results){
+            result: Result -> Unit
+        }
+        resultRecyclerView.adapter = adapter
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -39,11 +66,6 @@ class HistoryFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(HistoryViewModel::class.java)
         // TODO: Use the ViewModel
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d(logTag, "onCreate() called")
     }
 
     companion object {
