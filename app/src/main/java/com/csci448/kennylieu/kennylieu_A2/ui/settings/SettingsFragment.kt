@@ -6,6 +6,7 @@ import android.preference.PreferenceFragment
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.core.app.ActivityCompat.recreate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceFragmentCompat
@@ -34,10 +35,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
             if (newValue == true){
                 Toast.makeText(activity,"Dark Mode enabled",Toast.LENGTH_SHORT).show()
                 (activity as MainActivity).shouldEnableDarkMode(MainActivity.DarkModeConfig.YES)
+                (activity as MainActivity).recreate() //recreates the MainActivity because the Preferences are stupid and won't dynamically change otherwise
 
             }else{
                 Toast.makeText(activity,"Dark Mode disabled",Toast.LENGTH_SHORT).show()
                 (activity as MainActivity).shouldEnableDarkMode(MainActivity.DarkModeConfig.NO)
+                (activity as MainActivity).recreate() //recreates the MainActivity because the Preferences are stupid and won't dynamically change otherwise
             }
 
             true
