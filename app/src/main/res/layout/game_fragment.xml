@@ -24,8 +24,7 @@
                 android:id="@+id/block1"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
-                android:background="#83E56D"
-                app:srcCompat="@drawable/ic_x"></ImageView>
+                android:background="#83E56D"></ImageView>
             <ImageView
                 android:id="@+id/block2"
                 android:layout_width="90dp"
@@ -53,8 +52,7 @@
                 android:id="@+id/block5"
                 android:layout_width="90dp"
                 android:layout_height="90dp"
-                android:background="#BBF6BC"
-                app:srcCompat="@drawable/ic_o"></ImageView>
+                android:background="#BBF6BC"></ImageView>
             <ImageView
                 android:id="@+id/block6"
                 android:layout_width="90dp"
