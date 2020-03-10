@@ -42,9 +42,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 (activity as MainActivity).shouldEnableDarkMode(MainActivity.DarkModeConfig.NO)
                 (activity as MainActivity).recreate() //recreates the MainActivity because the Preferences are stupid and won't dynamically change otherwise
             }
-
             true
         }
+
+
+
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

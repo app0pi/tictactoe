@@ -9,12 +9,10 @@
     <SwitchPreferenceCompat
         app:key="key_dark_mode"
         app:title="Dark Mode"/>
-    <CheckBoxPreference
-        android:key="wifi enabled"
-        android:title="WiFi"/>
-    <Preference
-        android:key="key_sample"
-        android:title="Sample Title"
-        android:summary="This is a poop"
-        />
+    <SwitchPreferenceCompat
+        app:key="key_two_player"
+        app:title="Two Player"/>
+    <SwitchPreferenceCompat
+        app:key="key_x_first"
+        app:title="X Goes First"/>
 </PreferenceScreen>
