@@ -8,9 +8,15 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.csci448.kennylieu.kennylieu_A2.R
+import com.csci448.kennylieu.kennylieu_A2.data.Result
+import com.csci448.kennylieu.kennylieu_A2.ui.history.HistoryAdapter
+import com.csci448.kennylieu.kennylieu_A2.ui.history.HistoryViewModel
 
 class GameFragment : Fragment() {
     interface Callbacks {
@@ -22,7 +28,9 @@ class GameFragment : Fragment() {
 
     private var callbacks: Callbacks? = null
 
-    private lateinit var viewModel: GameViewModel
+    //TODO there are two viewmodels, fix that
+
+    //private lateinit var viewModel: GameViewModel
 
     private lateinit var playAgainButton: Button
     private lateinit var goBackButton: Button
@@ -44,6 +52,11 @@ class GameFragment : Fragment() {
     private var player1Pieces: MutableList<ImageView> = mutableListOf<ImageView>()
     private var player2Pieces: MutableList<ImageView> = mutableListOf<ImageView>()
     private var player1: Boolean = true
+
+    //NEW ADDITIONS
+//    private lateinit var historyViewModel: HistoryViewModel
+//    private lateinit var resultRecyclerView: RecyclerView
+//    private lateinit var adapter: HistoryAdapter
 
 
     private fun playPiece(block: ImageView){
@@ -75,6 +88,7 @@ class GameFragment : Fragment() {
         {
             Toast.makeText(activity,"Player 1 Wins!", Toast.LENGTH_SHORT).show()
             gameOver = true
+            log()
             return
         }
         if(player2Pieces.size>=3 &&
@@ -89,14 +103,21 @@ class GameFragment : Fragment() {
         {
             Toast.makeText(activity,"Player 2 Wins!", Toast.LENGTH_SHORT).show()
             gameOver = true
+            log()
             return
         }
         if(piecesPlaced==9){
             Toast.makeText(activity,"GAME OVER, Tie", Toast.LENGTH_SHORT).show()
             gameOver = true
+            log()
             return
         }
+    }
 
+    private fun log(){
+        val result = Result()
+        //historyViewModel.addResult(result)
+        true
     }
 
     override fun onCreateView(
@@ -184,16 +205,40 @@ class GameFragment : Fragment() {
             currentPiece = R.drawable.ic_x //if x goes first
         }
 
-        return view
 
+        //NEW ADDITIONS
+//        resultRecyclerView = view.findViewById(R.id.history_recycler_view)
+//        resultRecyclerView.layoutManager = LinearLayoutManager(context)
+//        updateUI(emptyList())
+
+        return view
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
+    //NEW ADDITIONS
+//    private fun updateUI(results: List<Result>){
+//        adapter = HistoryAdapter(results){
+//                result: Result -> Unit
+//            }
+//        resultRecyclerView.adapter = adapter
+//    }
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        Log.d(logTag, "onViewCreated() called")
+//        historyViewModel.resultLiveListData.observe(
+//            viewLifecycleOwner,
+//            Observer { results -> results?.let {
+//                Log.i(logTag, "Got results ${results.size}")
+//                updateUI(results)
+//            }}
+//        )
+//    }
+
+    /*override fun onActivityCreated(savedInstanceState: Bundle?) {
         Log.d(logTag, "onActivityCreated() called")
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(GameViewModel::class.java)
         // TODO: Use the ViewModel
-    }
+    }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -244,17 +289,4 @@ class GameFragment : Fragment() {
         super.onDestroyView()
     }
 
-/*
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(SettingsViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-    */
-    /*
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater) { //take out other question mark?
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.welcome_fragment_menu, menu)
-    }
-    */
 }

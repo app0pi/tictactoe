@@ -17,9 +17,9 @@
         android:icon="@drawable/ic_exit"
         android:title="@string/exit_string"
         app:showAsAction="ifRoom|withText" />
-    <!--item
+    <item
         android:id="@+id/new_result_menu_item"
         android:icon="@android:drawable/ic_menu_add"
         android:title="New Result"
-        app:showAsAction="ifRoom|withText"/-->
+        app:showAsAction="ifRoom|withText"/>
 </menu>
