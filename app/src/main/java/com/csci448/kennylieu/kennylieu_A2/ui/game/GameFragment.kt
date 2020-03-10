@@ -54,11 +54,6 @@ class GameFragment : Fragment() {
     private var player2Pieces: MutableList<ImageView> = mutableListOf<ImageView>()
     private var player1: Boolean = true
 
-    //NEW ADDITIONS
-//    private lateinit var historyViewModel: HistoryViewModel
-//    private lateinit var resultRecyclerView: RecyclerView
-//    private lateinit var adapter: HistoryAdapter
-
     //TRUSTED ADDITIONS
     private lateinit var gameViewModel: GameViewModel
 
@@ -91,7 +86,14 @@ class GameFragment : Fragment() {
         {
             Toast.makeText(activity,"Player 1 Wins!", Toast.LENGTH_SHORT).show()
             gameOver = true
-            log()
+            val result = Result()
+            result.winner = "Winner: Player 1.  "
+            if(currentPiece==R.drawable.ic_o){
+                result.winner += "Winning Piece: O"
+            } else {
+                result.winner += "Winning Piece: X"
+            }
+            gameViewModel.addResult(result)
             return
         }
         if(player2Pieces.size>=3 &&
@@ -106,21 +108,24 @@ class GameFragment : Fragment() {
         {
             Toast.makeText(activity,"Player 2 Wins!", Toast.LENGTH_SHORT).show()
             gameOver = true
-            log()
+            val result = Result()
+            result.winner = "Winner: Player 1.  "
+            if(currentPiece==R.drawable.ic_o){
+                result.winner += "Winning Piece: O"
+            } else {
+                result.winner += "Winning Piece: X"
+            }
+            gameViewModel.addResult(result)
             return
         }
         if(piecesPlaced==9){
             Toast.makeText(activity,"GAME OVER, Tie", Toast.LENGTH_SHORT).show()
             gameOver = true
-            log()
+            val result = Result()
+            result.winner = "Tie.  Winning Piece: None"
+            gameViewModel.addResult(result)
             return
         }
-    }
-
-    private fun log(){
-        val result = Result()
-        //historyViewModel.addResult(result)
-        true
     }
 
     override fun onCreateView(
@@ -208,33 +213,8 @@ class GameFragment : Fragment() {
             currentPiece = R.drawable.ic_x //if x goes first
         }
 
-
-        //NEW ADDITIONS
-//        resultRecyclerView = view.findViewById(R.id.history_recycler_view)
-//        resultRecyclerView.layoutManager = LinearLayoutManager(context)
-//        updateUI(emptyList())
-
         return view
     }
-
-    //NEW ADDITIONS
-//    private fun updateUI(results: List<Result>){
-//        adapter = HistoryAdapter(results){
-//                result: Result -> Unit
-//            }
-//        resultRecyclerView.adapter = adapter
-//    }
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//        Log.d(logTag, "onViewCreated() called")
-//        historyViewModel.resultLiveListData.observe(
-//            viewLifecycleOwner,
-//            Observer { results -> results?.let {
-//                Log.i(logTag, "Got results ${results.size}")
-//                updateUI(results)
-//            }}
-//        )
-//    }
 
     /*override fun onActivityCreated(savedInstanceState: Bundle?) {
         Log.d(logTag, "onActivityCreated() called")
@@ -250,11 +230,6 @@ class GameFragment : Fragment() {
         //TRUSTED ADDITIONS
         val factory = GameViewModelFactory(requireContext())
         gameViewModel = ViewModelProvider(this, factory).get(GameViewModel::class.java)
-
-        val result = Result()
-        result.winner = "Player 1"
-        gameViewModel.addResult(result)
-
     }
 
 
