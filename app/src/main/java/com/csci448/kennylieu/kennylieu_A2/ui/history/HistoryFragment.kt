@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceFragmentCompat
@@ -59,6 +60,18 @@ class HistoryFragment : Fragment() {
             result: Result -> Unit
         }
         resultRecyclerView.adapter = adapter
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.d(logTag, "onViewCreated() called")
+        historyViewModel.resultLiveListData.observe(
+            viewLifecycleOwner,
+            Observer { results -> results?.let {
+                Log.i(logTag, "Got results ${results.size}")
+                updateUI(results)
+            }}
+        )
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
