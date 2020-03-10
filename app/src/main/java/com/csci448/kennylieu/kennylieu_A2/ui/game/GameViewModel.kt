@@ -27,4 +27,8 @@ class GameViewModel(private val resultRepository: ResultRepository) : ViewModel(
     fun deleteResult(result: Result){
         resultRepository.deleteResult(result)
     }
+
+    fun addResult(result: Result){
+        resultRepository.addResult(result)
+    }
 }

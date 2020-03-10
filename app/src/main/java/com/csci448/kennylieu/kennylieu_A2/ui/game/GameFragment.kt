@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -58,6 +59,8 @@ class GameFragment : Fragment() {
 //    private lateinit var resultRecyclerView: RecyclerView
 //    private lateinit var adapter: HistoryAdapter
 
+    //TRUSTED ADDITIONS
+    private lateinit var gameViewModel: GameViewModel
 
     private fun playPiece(block: ImageView){
         if(!playedPieces.contains(block) && !gameOver){
@@ -243,6 +246,14 @@ class GameFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(logTag, "onCreate() called")
+
+        //TRUSTED ADDITIONS
+        val factory = GameViewModelFactory(requireContext())
+        gameViewModel = ViewModelProvider(this, factory).get(GameViewModel::class.java)
+
+        val result = Result()
+        result.winner = "Player 1"
+        gameViewModel.addResult(result)
 
     }
 
