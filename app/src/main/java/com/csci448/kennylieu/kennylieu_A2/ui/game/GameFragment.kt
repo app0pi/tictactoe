@@ -92,11 +92,11 @@ class GameFragment : Fragment() {
     override fun onStop(){
         Log.d(logTag, "onStop() called")
         super.onStop()
-        callbacks?.onGameBackClicked()
     }
     override fun onDestroy(){
         Log.d(logTag, "onDestroy() called")
         super.onDestroy()
+        callbacks?.onGameBackClicked() //could move to onDetach or onDestroyView
     }
     override fun onDestroyView(){
         Log.d(logTag, "onDestroyView() called")
