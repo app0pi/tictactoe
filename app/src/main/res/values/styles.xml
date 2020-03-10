@@ -12,6 +12,7 @@
     <!-- Preference theme -->
     <style name="SettingsTheme">
         <item name="android:background">@color/colorBackground</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
     </style>
     <!-- TODO get rid of settingstheme -->
 
