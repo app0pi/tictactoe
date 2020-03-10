@@ -93,6 +93,7 @@ class GameFragment : Fragment() {
         if(piecesPlaced==9){
             Toast.makeText(activity,"GAME OVER, Tie", Toast.LENGTH_SHORT).show()
             gameOver = true
+            return
         }
 
     }
