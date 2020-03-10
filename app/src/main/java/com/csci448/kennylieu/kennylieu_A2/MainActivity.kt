@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(), WelcomeFragment.Callbacks, SettingsFra
                 .commitNow()
         }
 
-        shouldEnableDarkMode()
+        shouldEnableDarkMode(DarkModeConfig.FOLLOW_SYSTEM)
 
         //TodO implement Sharedpreferences
 

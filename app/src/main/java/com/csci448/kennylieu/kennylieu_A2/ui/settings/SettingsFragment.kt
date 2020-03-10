@@ -34,13 +34,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
         darkModeOn?.setOnPreferenceChangeListener{ preference, newValue -> //TODO rename preference
             if (newValue == true){
                 Toast.makeText(activity,"Dark Mode enabled",Toast.LENGTH_SHORT).show()
-                (activity as MainActivity).shouldEnableDarkMode(MainActivity.DarkModeConfig.YES)
+
                 (activity as MainActivity).recreate() //recreates the MainActivity because the Preferences are stupid and won't dynamically change otherwise
+                (activity as MainActivity).shouldEnableDarkMode(MainActivity.DarkModeConfig.YES)
 
             }else{
                 Toast.makeText(activity,"Dark Mode disabled",Toast.LENGTH_SHORT).show()
-                (activity as MainActivity).shouldEnableDarkMode(MainActivity.DarkModeConfig.NO)
+
                 (activity as MainActivity).recreate() //recreates the MainActivity because the Preferences are stupid and won't dynamically change otherwise
+                (activity as MainActivity).shouldEnableDarkMode(MainActivity.DarkModeConfig.NO)
             }
 
             true
