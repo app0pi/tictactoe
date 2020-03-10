@@ -1,6 +1,7 @@
 package com.csci448.kennylieu.kennylieu_A2.ui.settings
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceFragment
 import android.util.Log
@@ -10,6 +11,7 @@ import androidx.core.app.ActivityCompat.recreate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
 import com.csci448.kennylieu.kennylieu_A2.MainActivity
 import com.csci448.kennylieu.kennylieu_A2.R
@@ -29,7 +31,23 @@ class SettingsFragment : PreferenceFragmentCompat() {
         Log.d(logTag, "onCreatePreferences() called")
         setPreferencesFromResource(R.xml.settings_fragment, rootKey)
 
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+
         val darkModeOn: SwitchPreferenceCompat? = findPreference("key_dark_mode")
+        val xFirst: SwitchPreferenceCompat? = findPreference("key_x_first")
+
+        xFirst?.setOnPreferenceChangeListener{ preference, newValue ->
+            if(newValue == true){
+                sharedPref.edit().putBoolean("x_first", true).apply()
+                Toast.makeText(activity,"X goes first",Toast.LENGTH_SHORT).show()
+                Log.d(logTag, "x goes first")
+            } else {
+                sharedPref.edit().putBoolean("x_first", false).apply()
+                Toast.makeText(activity,"O goes first",Toast.LENGTH_SHORT).show()
+                Log.d(logTag, "o goes first")
+            }
+            true
+        }
 
         darkModeOn?.setOnPreferenceChangeListener{ preference, newValue -> //TODO rename preference
             if (newValue == true){

@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.preference.PreferenceManager
 import com.csci448.kennylieu.kennylieu_A2.R
 
 class GameFragment : Fragment() {
@@ -35,10 +36,10 @@ class GameFragment : Fragment() {
     private lateinit var block7: ImageView
     private lateinit var block8: ImageView
     private lateinit var block9: ImageView
+    private var currentPiece: Int = 0
 
     private var piecesPlaced: Int = 0
     private var gameOver: Boolean = false
-    private var currentPiece: Int = R.drawable.ic_o
     private var playedPieces: MutableList<ImageView> = mutableListOf<ImageView>()
     private var player1Pieces: MutableList<ImageView> = mutableListOf<ImageView>()
     private var player2Pieces: MutableList<ImageView> = mutableListOf<ImageView>()
@@ -134,6 +135,15 @@ class GameFragment : Fragment() {
             piecesPlaced = 0
             player1 = true
             currentPiece = R.drawable.ic_o
+            val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+
+            if(sharedPref.getBoolean("x_first", false)==false){ //if o goes first
+                Log.d(logTag, "getBoolean returned false for x goes first")
+                currentPiece = R.drawable.ic_o
+            } else {
+                Log.d(logTag, "getBoolean returned true for x goes first")
+                currentPiece = R.drawable.ic_x //if x goes first
+            }
         }
         goBackButton.setOnClickListener {
             callbacks?.onGameBackClicked()
@@ -165,6 +175,13 @@ class GameFragment : Fragment() {
         }
         block9.setOnClickListener {
             playPiece(block9)
+        }
+
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+        if(sharedPref.getBoolean("x_first", false)==false){ //if o goes first
+            currentPiece = R.drawable.ic_o
+        } else {
+            currentPiece = R.drawable.ic_x //if x goes first
         }
 
         return view
