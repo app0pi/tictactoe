@@ -2,16 +2,12 @@ package com.csci448.kennylieu.kennylieu_A2.ui.game
 
 import android.content.Context
 import android.os.Bundle
-import android.preference.PreferenceFragment
 import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
-import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreferenceCompat
 import com.csci448.kennylieu.kennylieu_A2.R
 
 class GameFragment : Fragment() {
@@ -42,7 +38,7 @@ class GameFragment : Fragment() {
 
     private var currentPiece: Int = R.drawable.ic_o
 
-    fun switchPiece(){
+    private fun playPiece(block: ImageView){
         if(currentPiece == R.drawable.ic_o)
             currentPiece = R.drawable.ic_x
         else
@@ -84,40 +80,31 @@ class GameFragment : Fragment() {
         }
 
         block1.setOnClickListener {
-            block1.setImageResource(currentPiece)
-            switchPiece()
+            playPiece(block1)
         }
         block2.setOnClickListener {
-            block2.setImageResource(currentPiece)
-            switchPiece()
+            playPiece(block1)
         }
         block3.setOnClickListener {
-            block3.setImageResource(currentPiece)
-            switchPiece()
+            playPiece(block1)
         }
         block4.setOnClickListener {
-            block4.setImageResource(currentPiece)
-            switchPiece()
+            playPiece(block1)
         }
         block5.setOnClickListener {
-            block5.setImageResource(currentPiece)
-            switchPiece()
+            playPiece(block1)
         }
         block6.setOnClickListener {
-            block6.setImageResource(currentPiece)
-            switchPiece()
+            playPiece(block1)
         }
         block7.setOnClickListener {
-            block7.setImageResource(currentPiece)
-            switchPiece()
+            playPiece(block1)
         }
         block8.setOnClickListener {
-            block8.setImageResource(currentPiece)
-            switchPiece()
+            playPiece(block1)
         }
         block9.setOnClickListener {
-            block9.setImageResource(currentPiece)
-            switchPiece()
+            playPiece(block1)
         }
 
         return view
