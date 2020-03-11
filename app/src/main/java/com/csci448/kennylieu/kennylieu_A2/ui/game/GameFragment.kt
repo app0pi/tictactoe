@@ -126,10 +126,10 @@ class GameFragment : Fragment() {
                 gameOver = true
                 val result = Result()
                 result.winner = "Winner: Player 1.  "
-                if(currentPiece==R.drawable.ic_o){
-                    result.winner += "Winning Piece: X"
-                } else {
+                if(player1Piece==R.drawable.ic_o){
                     result.winner += "Winning Piece: O"
+                } else {
+                    result.winner += "Winning Piece: X"
                 }
                 gameViewModel.addResult(result)
                 return
@@ -157,10 +157,10 @@ class GameFragment : Fragment() {
                 gameOver = true
                 val result = Result()
                 result.winner = "Winner: Player 2.  "
-                if(currentPiece==R.drawable.ic_o){
-                    result.winner += "Winning Piece: X"
-                } else {
+                if(player2Piece==R.drawable.ic_o){
                     result.winner += "Winning Piece: O"
+                } else {
+                    result.winner += "Winning Piece: X"
                 }
                 gameViewModel.addResult(result)
                 return
@@ -175,7 +175,7 @@ class GameFragment : Fragment() {
             }
         } else {
             Log.d(logTag, "can't play piece")
-            //Log.d(logTag, playedPieces?.contains(block.id).toString())
+            Toast.makeText(activity,"Press NEW GAME to play", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -206,11 +206,13 @@ class GameFragment : Fragment() {
             player1Piece = R.drawable.ic_o
             player2Piece = R.drawable.ic_x
             currentPiece = R.drawable.ic_o
+            Toast.makeText(activity,"Player 1, you play as O", Toast.LENGTH_SHORT).show()
         } else {//if x goes first
             Log.d(logTag, "getBoolean returned true for x goes first")
             player1Piece = R.drawable.ic_x
             player2Piece = R.drawable.ic_o
             currentPiece = R.drawable.ic_x
+            Toast.makeText(activity,"Player 1, you play as X", Toast.LENGTH_SHORT).show()
         }
     }
 
