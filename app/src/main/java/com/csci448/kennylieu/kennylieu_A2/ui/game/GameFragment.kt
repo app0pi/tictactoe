@@ -80,20 +80,25 @@ class GameFragment : Fragment() {
 
     private fun playPiece(block: ImageView){
 //        if(!playedPieces.contains(block) && !gameOver){
-        if(playedPieces?.contains(block.id)==false && !gameOver){ //FOR PURPOSES OF BUNDLE
-            block.setImageResource(currentPiece)
+
+        if((playedPieces?.contains(block.id)==false) && !gameOver){ //FOR PURPOSES OF BUNDLE
+            /*block.setImageResource(currentPiece)
             if(currentPiece == R.drawable.ic_o)
                 currentPiece = R.drawable.ic_x
             else
-                currentPiece = R.drawable.ic_o
+                currentPiece = R.drawable.ic_o*/
+
             //playedPieces.add(block)
+            Log.d(logTag, "piece played")
             playedPieces?.add(block.id) //FOR PURPOSES OF BUNDLE
             piecesPlaced++
             if(player1){
+                block.setImageResource(player1Piece)
                 //player1Pieces.add(block)
                 player1Pieces?.add(block.id)//FOR PURPOSES OF BUNDLE
                 player1 = false
             } else {
+                block.setImageResource(player2Piece)
                 //player2Pieces.add(block)
                 player2Pieces?.add(block.id) //FOR PURPOSES OF BUNDLE
                 player1 = true
@@ -168,14 +173,65 @@ class GameFragment : Fragment() {
                 gameViewModel.addResult(result)
                 return
             }
+        } else {
+            Log.d(logTag, "can't play piece")
+            //Log.d(logTag, playedPieces?.contains(block.id).toString())
         }
+    }
 
+    fun initialize() {
+        block1.setImageResource(android.R.color.transparent)
+        block2.setImageResource(android.R.color.transparent)
+        block3.setImageResource(android.R.color.transparent)
+        block4.setImageResource(android.R.color.transparent)
+        block5.setImageResource(android.R.color.transparent)
+        block6.setImageResource(android.R.color.transparent)
+        block7.setImageResource(android.R.color.transparent)
+        block8.setImageResource(android.R.color.transparent)
+        block9.setImageResource(android.R.color.transparent)
+//            playedPieces = mutableListOf<ImageView>()
+//            player1Pieces = mutableListOf<ImageView>()
+//            player2Pieces = mutableListOf<ImageView>()
+        playedPieces = ArrayList<Int?>()
+        player1Pieces = ArrayList<Int?>()
+        player2Pieces = ArrayList<Int?>()
+        gameOver = false
+        piecesPlaced = 0
+        player1 = true
+        currentPiece = R.drawable.ic_o
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+
+        if(sharedPref.getBoolean("x_first", false)==false){ //if o goes first
+            Log.d(logTag, "getBoolean returned false for x goes first")
+            player1Piece = R.drawable.ic_o
+            player2Piece = R.drawable.ic_x
+            currentPiece = R.drawable.ic_o
+        } else {//if x goes first
+            Log.d(logTag, "getBoolean returned true for x goes first")
+            player1Piece = R.drawable.ic_x
+            player2Piece = R.drawable.ic_o
+            currentPiece = R.drawable.ic_x
+        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        player1Piece = savedInstanceState?.getInt("player1Piece", player1Piece) ?: 0
+        player2Piece = savedInstanceState?.getInt("player2Piece", player2Piece) ?: 0
+        piecesPlaced = savedInstanceState?.getInt("piecesPlaced", piecesPlaced) ?: 0
+        currentPiece = savedInstanceState?.getInt("currentPiece", currentPiece) ?: 0
+        gameOver = savedInstanceState?.getBoolean("gameOver", gameOver) ?: false
+        player1 = savedInstanceState?.getBoolean("player1", player1) ?: false
+        var blep: String? = "playedPieces"
+        val clep: String? = "player1Pieces"
+        val dlep: String? = "player2Pieces"
+        playedPieces = savedInstanceState?.getIntegerArrayList(blep)
+        player1Pieces = savedInstanceState?.getIntegerArrayList(clep)
+        player2Pieces = savedInstanceState?.getIntegerArrayList(dlep)
+
         Log.d(logTag, "onCreateView() called")
         setHasOptionsMenu(true)
         val view = inflater.inflate(R.layout.game_fragment, container, false)
@@ -192,38 +248,7 @@ class GameFragment : Fragment() {
         block9 = view?.findViewById(R.id.block9) as ImageView
 
         playAgainButton.setOnClickListener {
-            block1.setImageResource(android.R.color.transparent)
-            block2.setImageResource(android.R.color.transparent)
-            block3.setImageResource(android.R.color.transparent)
-            block4.setImageResource(android.R.color.transparent)
-            block5.setImageResource(android.R.color.transparent)
-            block6.setImageResource(android.R.color.transparent)
-            block7.setImageResource(android.R.color.transparent)
-            block8.setImageResource(android.R.color.transparent)
-            block9.setImageResource(android.R.color.transparent)
-//            playedPieces = mutableListOf<ImageView>()
-//            player1Pieces = mutableListOf<ImageView>()
-//            player2Pieces = mutableListOf<ImageView>()
-            playedPieces = ArrayList<Int?>()
-            player1Pieces = ArrayList<Int?>()
-            player2Pieces = ArrayList<Int?>()
-            gameOver = false
-            piecesPlaced = 0
-            player1 = true
-            currentPiece = R.drawable.ic_o
-            val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-
-            if(sharedPref.getBoolean("x_first", false)==false){ //if o goes first
-                Log.d(logTag, "getBoolean returned false for x goes first")
-                player1Piece = R.drawable.ic_o
-                player2Piece = R.drawable.ic_x
-                currentPiece = R.drawable.ic_o
-            } else {//if x goes first
-                Log.d(logTag, "getBoolean returned true for x goes first")
-                player1Piece = R.drawable.ic_x
-                player2Piece = R.drawable.ic_o
-                currentPiece = R.drawable.ic_x
-            }
+            initialize()
         }
         goBackButton.setOnClickListener {
             callbacks?.onGameBackClicked()
@@ -312,19 +337,7 @@ class GameFragment : Fragment() {
         val factory = GameViewModelFactory(requireContext())
         gameViewModel = ViewModelProvider(this, factory).get(GameViewModel::class.java)
 
-        player1Piece = savedInstanceState?.getInt("player1Piece", player1Piece) ?: 0
-        player2Piece = savedInstanceState?.getInt("player2Piece", player2Piece) ?: 0
-        piecesPlaced = savedInstanceState?.getInt("piecesPlaced", piecesPlaced) ?: 0
-        currentPiece = savedInstanceState?.getInt("currentPiece", currentPiece) ?: 0
-        gameOver = savedInstanceState?.getBoolean("gameOver", gameOver) ?: false
-        player1 = savedInstanceState?.getBoolean("player1", player1) ?: true
 
-        var blep: String? = "playedPieces"
-        val clep: String? = "player1Pieces"
-        val dlep: String? = "player2Pieces"
-        playedPieces = savedInstanceState?.getIntegerArrayList(blep)
-        player1Pieces = savedInstanceState?.getIntegerArrayList(clep)
-        player2Pieces = savedInstanceState?.getIntegerArrayList(dlep)
     }
 
 
