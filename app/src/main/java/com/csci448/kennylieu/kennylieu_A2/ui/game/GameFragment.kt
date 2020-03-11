@@ -46,6 +46,9 @@ class GameFragment : Fragment() {
     private lateinit var block8: ImageView
     private lateinit var block9: ImageView
 
+    private var player1Piece: Int = 0
+    private var player2Piece: Int = 0
+
     private var currentPiece: Int = 0
     private var piecesPlaced: Int = 0
     private var player1: Boolean = true
@@ -55,8 +58,8 @@ class GameFragment : Fragment() {
 //    private var player2Pieces: MutableList<ImageView> = mutableListOf<ImageView>()
 
     private var playedPieces: ArrayList<Int?>? = ArrayList<Int?>() //FOR PURPOSES OF BUNDLE
-    private var player1Pieces: ArrayList<Int?> = ArrayList<Int?>() //FOR PURPOSES OF BUNDLE
-    private var player2Pieces: ArrayList<Int?> = ArrayList<Int?>() //FOR PURPOSES OF BUNDLE
+    private var player1Pieces: ArrayList<Int?>? = ArrayList<Int?>() //FOR PURPOSES OF BUNDLE
+    private var player2Pieces: ArrayList<Int?>? = ArrayList<Int?>() //FOR PURPOSES OF BUNDLE
 
     //TRUSTED ADDITIONS
     private lateinit var gameViewModel: GameViewModel
@@ -64,6 +67,8 @@ class GameFragment : Fragment() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         Log.i(logTag, "onSaveInstanceState")
+        outState.putInt("player1Piece", player1Piece)
+        outState.putInt("player2Piece", player2Piece)
         outState.putInt("piecesPlaced", piecesPlaced)
         outState.putInt("currentPiece", currentPiece)
         outState.putBoolean("gameOver", gameOver)
@@ -86,11 +91,11 @@ class GameFragment : Fragment() {
             piecesPlaced++
             if(player1){
                 //player1Pieces.add(block)
-                player1Pieces.add(block.id)//FOR PURPOSES OF BUNDLE
+                player1Pieces?.add(block.id)//FOR PURPOSES OF BUNDLE
                 player1 = false
             } else {
                 //player2Pieces.add(block)
-                player2Pieces.add(block.id) //FOR PURPOSES OF BUNDLE
+                player2Pieces?.add(block.id) //FOR PURPOSES OF BUNDLE
                 player1 = true
             }
             /*if(player1Pieces.size>=3 &&
@@ -102,15 +107,15 @@ class GameFragment : Fragment() {
                         player1Pieces.contains(block3) && player1Pieces.contains(block6) && player1Pieces.contains(block9) ||
                         player1Pieces.contains(block1) && player1Pieces.contains(block5) && player1Pieces.contains(block9) ||
                         player1Pieces.contains(block3) && player1Pieces.contains(block5) && player1Pieces.contains(block7) ) )*/
-            if(player1Pieces.size>=3 &&
-                (player1Pieces.contains(block1.id) && player1Pieces.contains(block2.id) && player1Pieces.contains(block3.id) ||
-                        player1Pieces.contains(block4.id) && player1Pieces.contains(block5.id) && player1Pieces.contains(block6.id) ||
-                        player1Pieces.contains(block7.id) && player1Pieces.contains(block8.id) && player1Pieces.contains(block9.id) ||
-                        player1Pieces.contains(block1.id) && player1Pieces.contains(block4.id) && player1Pieces.contains(block7.id) ||
-                        player1Pieces.contains(block2.id) && player1Pieces.contains(block5.id) && player1Pieces.contains(block8.id) ||
-                        player1Pieces.contains(block3.id) && player1Pieces.contains(block6.id) && player1Pieces.contains(block9.id) ||
-                        player1Pieces.contains(block1.id) && player1Pieces.contains(block5.id) && player1Pieces.contains(block9.id) ||
-                        player1Pieces.contains(block3.id) && player1Pieces.contains(block5.id) && player1Pieces.contains(block7.id) ) ) //FOR PURPOSES OF BUNDLE
+            if( (player1Pieces?.size==3 || player1Pieces?.size==4 || player1Pieces?.size==5)  &&
+                (player1Pieces?.contains(block1.id)==true && player1Pieces?.contains(block2.id)==true && player1Pieces?.contains(block3.id)==true ||
+                        player1Pieces?.contains(block4.id)==true && player1Pieces?.contains(block5.id)==true && player1Pieces?.contains(block6.id)==true ||
+                        player1Pieces?.contains(block7.id)==true && player1Pieces?.contains(block8.id)==true && player1Pieces?.contains(block9.id)==true ||
+                        player1Pieces?.contains(block1.id)==true && player1Pieces?.contains(block4.id)==true && player1Pieces?.contains(block7.id)==true ||
+                        player1Pieces?.contains(block2.id)==true && player1Pieces?.contains(block5.id)==true && player1Pieces?.contains(block8.id)==true ||
+                        player1Pieces?.contains(block3.id)==true && player1Pieces?.contains(block6.id)==true && player1Pieces?.contains(block9.id)==true ||
+                        player1Pieces?.contains(block1.id)==true && player1Pieces?.contains(block5.id)==true && player1Pieces?.contains(block9.id)==true ||
+                        player1Pieces?.contains(block3.id)==true && player1Pieces?.contains(block5.id)==true && player1Pieces?.contains(block7.id)==true ) ) //FOR PURPOSES OF BUNDLE
             {
                 Toast.makeText(activity,"Player 1 Wins!", Toast.LENGTH_SHORT).show()
                 gameOver = true
@@ -133,15 +138,15 @@ class GameFragment : Fragment() {
                         player2Pieces.contains(block3) && player2Pieces.contains(block6) && player2Pieces.contains(block9) ||
                         player2Pieces.contains(block1) && player2Pieces.contains(block5) && player2Pieces.contains(block9) ||
                         player2Pieces.contains(block3) && player2Pieces.contains(block5) && player2Pieces.contains(block7) ) )*/
-            if(player2Pieces.size>=3 &&
-                (player2Pieces.contains(block1.id) && player2Pieces.contains(block2.id) && player2Pieces.contains(block3.id) ||
-                        player2Pieces.contains(block4.id) && player2Pieces.contains(block5.id) && player2Pieces.contains(block6.id) ||
-                        player2Pieces.contains(block7.id) && player2Pieces.contains(block8.id) && player2Pieces.contains(block9.id) ||
-                        player2Pieces.contains(block1.id) && player2Pieces.contains(block4.id) && player2Pieces.contains(block7.id) ||
-                        player2Pieces.contains(block2.id) && player2Pieces.contains(block5.id) && player2Pieces.contains(block8.id) ||
-                        player2Pieces.contains(block3.id) && player2Pieces.contains(block6.id) && player2Pieces.contains(block9.id) ||
-                        player2Pieces.contains(block1.id) && player2Pieces.contains(block5.id) && player2Pieces.contains(block9.id) ||
-                        player2Pieces.contains(block3.id) && player2Pieces.contains(block5.id) && player2Pieces.contains(block7.id) ) ) //FOR PURPOSES OF BUNDLE
+            if( (player2Pieces?.size==3 || player2Pieces?.size==4 || player2Pieces?.size==5) &&
+                (player2Pieces?.contains(block1.id)==true && player2Pieces?.contains(block2.id)==true && player2Pieces?.contains(block3.id)==true ||
+                        player2Pieces?.contains(block4.id)==true && player2Pieces?.contains(block5.id)==true && player2Pieces?.contains(block6.id)==true ||
+                        player2Pieces?.contains(block7.id)==true && player2Pieces?.contains(block8.id)==true && player2Pieces?.contains(block9.id)==true ||
+                        player2Pieces?.contains(block1.id)==true && player2Pieces?.contains(block4.id)==true && player2Pieces?.contains(block7.id)==true ||
+                        player2Pieces?.contains(block2.id)==true && player2Pieces?.contains(block5.id)==true && player2Pieces?.contains(block8.id)==true ||
+                        player2Pieces?.contains(block3.id)==true && player2Pieces?.contains(block6.id)==true && player2Pieces?.contains(block9.id)==true ||
+                        player2Pieces?.contains(block1.id)==true && player2Pieces?.contains(block5.id)==true && player2Pieces?.contains(block9.id)==true ||
+                        player2Pieces?.contains(block3.id)==true && player2Pieces?.contains(block5.id)==true && player2Pieces?.contains(block7.id)==true ) ) //FOR PURPOSES OF BUNDLE
             {
                 Toast.makeText(activity,"Player 2 Wins!", Toast.LENGTH_SHORT).show()
                 gameOver = true
@@ -210,10 +215,14 @@ class GameFragment : Fragment() {
 
             if(sharedPref.getBoolean("x_first", false)==false){ //if o goes first
                 Log.d(logTag, "getBoolean returned false for x goes first")
+                player1Piece = R.drawable.ic_o
+                player2Piece = R.drawable.ic_x
                 currentPiece = R.drawable.ic_o
-            } else {
+            } else {//if x goes first
                 Log.d(logTag, "getBoolean returned true for x goes first")
-                currentPiece = R.drawable.ic_x //if x goes first
+                player1Piece = R.drawable.ic_x
+                player2Piece = R.drawable.ic_o
+                currentPiece = R.drawable.ic_x
             }
         }
         goBackButton.setOnClickListener {
@@ -255,6 +264,13 @@ class GameFragment : Fragment() {
             currentPiece = R.drawable.ic_x //if x goes first
         }
 
+        for(blockId in playedPieces.orEmpty()){
+            if(blockId == R.id.block1) {
+                if(player1Pieces?.contains(blockId)==true){ block1.setImageResource(player1Piece) } else { block1.setImageResource(player2Piece) }
+            }
+
+        }
+
         return view
     }
 
@@ -273,6 +289,8 @@ class GameFragment : Fragment() {
         val factory = GameViewModelFactory(requireContext())
         gameViewModel = ViewModelProvider(this, factory).get(GameViewModel::class.java)
 
+        player1Piece = savedInstanceState?.getInt("player1Piece", player1Piece) ?: 0
+        player2Piece = savedInstanceState?.getInt("player2Piece", player2Piece) ?: 0
         piecesPlaced = savedInstanceState?.getInt("piecesPlaced", piecesPlaced) ?: 0
         currentPiece = savedInstanceState?.getInt("currentPiece", currentPiece) ?: 0
         gameOver = savedInstanceState?.getBoolean("gameOver", gameOver) ?: false
@@ -282,8 +300,8 @@ class GameFragment : Fragment() {
         val clep: String? = "player1Pieces"
         val dlep: String? = "player2Pieces"
         playedPieces = savedInstanceState?.getIntegerArrayList(blep)
-        //player1Pieces = savedInstanceState?.getIntegerArrayList(clep)
-        //player2Pieces = savedInstanceState?.getIntegerArrayList(dlep)
+        player1Pieces = savedInstanceState?.getIntegerArrayList(clep)
+        player2Pieces = savedInstanceState?.getIntegerArrayList(dlep)
     }
 
 
