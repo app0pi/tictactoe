@@ -264,11 +264,34 @@ class GameFragment : Fragment() {
             currentPiece = R.drawable.ic_x //if x goes first
         }
 
-        for(blockId in playedPieces.orEmpty()){
+        for(blockId in playedPieces.orEmpty()){ //redrawing after screen rotation
             if(blockId == R.id.block1) {
                 if(player1Pieces?.contains(blockId)==true){ block1.setImageResource(player1Piece) } else { block1.setImageResource(player2Piece) }
             }
-
+            if(blockId == R.id.block2) {
+                if(player1Pieces?.contains(blockId)==true){ block2.setImageResource(player1Piece) } else { block2.setImageResource(player2Piece) }
+            }
+            if(blockId == R.id.block3) {
+                if(player1Pieces?.contains(blockId)==true){ block3.setImageResource(player1Piece) } else { block3.setImageResource(player2Piece) }
+            }
+            if(blockId == R.id.block4) {
+                if(player1Pieces?.contains(blockId)==true){ block4.setImageResource(player1Piece) } else { block4.setImageResource(player2Piece) }
+            }
+            if(blockId == R.id.block5) {
+                if(player1Pieces?.contains(blockId)==true){ block5.setImageResource(player1Piece) } else { block5.setImageResource(player2Piece) }
+            }
+            if(blockId == R.id.block6) {
+                if(player1Pieces?.contains(blockId)==true){ block6.setImageResource(player1Piece) } else { block6.setImageResource(player2Piece) }
+            }
+            if(blockId == R.id.block7) {
+                if(player1Pieces?.contains(blockId)==true){ block7.setImageResource(player1Piece) } else { block7.setImageResource(player2Piece) }
+            }
+            if(blockId == R.id.block8) {
+                if(player1Pieces?.contains(blockId)==true){ block8.setImageResource(player1Piece) } else { block8.setImageResource(player2Piece) }
+            }
+            if(blockId == R.id.block9) {
+                if(player1Pieces?.contains(blockId)==true){ block9.setImageResource(player1Piece) } else { block9.setImageResource(player2Piece) }
+            }
         }
 
         return view
